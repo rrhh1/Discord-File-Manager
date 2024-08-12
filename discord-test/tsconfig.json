@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noImplicitAny": true,
+    "declaration": false,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,3 @@
+*.env
+/discord-test/node_modules
+*.mp4
