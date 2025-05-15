@@ -1,27 +1,27 @@
 import axios from "axios";
 
-export const uploadData = async (fileName: string, fileDataBase64: string) => {
+export const uploadDataToDiscord = async (fileName: string, fileDataBase64: string) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};
 
 	const payload = {
-		name: fileName,
+		fileName: fileName,
 		data: fileDataBase64,
 	};
 
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		axios
 			.post("http://localhost:8000/files/upload", payload, {
 				headers: headers,
 			})
-			.catch((error) => {
-				console.log(error.response.status);
-				reject(false);
-			})
 			.then((response?) => {
 				console.log(response?.status);
 				resolve(true);
+			})
+			.catch((error) => {
+				console.log(error.status);
+				resolve(false);
 			});
 	});
 };

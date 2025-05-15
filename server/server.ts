@@ -11,8 +11,6 @@ const corsOptions = {
 	origin: ["http://localhost:5173"],
 };
 
-// ===================== DISCORD BOT ===============================
-
 // ===================== EXPRESS SERVER ===============================
 app.use(cors(corsOptions));
 

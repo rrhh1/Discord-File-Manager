@@ -1,4 +1,5 @@
-import {uploadData} from "./APIs/uploadData";
+import {createDiscordFile} from "./APIs/createDiscordFile";
+import {uploadDataToDiscord} from "./APIs/uploadDataToDiscord";
 
 export const uploadButtonLogic = (
 	// isDisabled: boolean,
@@ -22,19 +23,26 @@ export const uploadButtonLogic = (
 		const arrayBuffer = e.target?.result as ArrayBuffer;
 		var byteArray = new Uint8Array(arrayBuffer);
 
+		const response = await createDiscordFile(fileName);
+		if (!response) {
+			setIsDisabled(false);
+			console.log("File in Discord already exists!");
+			return;
+		}
+
 		var promises = [];
 		for (let i = 0; i < byteArray.length; i += CHUNK_SIZE) {
 			const chunk = byteArray.slice(i, i + CHUNK_SIZE);
 
-			var len = chunk.byteLength;
 			var binary = "";
+			var len = chunk.byteLength;
 			for (var j = 0; j < len; j++) {
 				binary += String.fromCharCode(chunk[j]);
 			}
 
-			const base64String = btoa(binary);
+			const base64String = window.btoa(binary);
 
-			const promise = uploadData(fileName, base64String);
+			const promise = uploadDataToDiscord(fileName, base64String);
 			promises.push(promise);
 		}
 
