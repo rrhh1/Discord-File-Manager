@@ -11,7 +11,7 @@ export const bodyFileNameIsExist = (req: Request, res: Response, next: NextFunct
 	next();
 };
 
-export const createDiscordFolderName = (req: Request, res: Response, next: NextFunction) => {
+export const createDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
 	const fileName_split = (req.body.fileName as string)
 		.replaceAll(" ", "-")
 		.replaceAll(".", "-")
@@ -22,7 +22,7 @@ export const createDiscordFolderName = (req: Request, res: Response, next: NextF
 
 	req.body.name = name;
 	req.body.extension = extension;
-	req.body.discordFolderName = name + "_" + extension;
+	req.body.discordFileName = name + "_" + extension;
 
 	next();
 };
@@ -45,9 +45,9 @@ export const bodyDataIsExist = (req: Request, res: Response, next: NextFunction)
 	next();
 };
 
-export const createDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
-	const discordFileName = req.body.discordFolderName + " " + req.body.index;
-	req.body.discordFileName = discordFileName;
+export const createDiscordSubFileName = (req: Request, res: Response, next: NextFunction) => {
+	const discordSubFileName = req.body.fileName + " " + req.body.index;
+	req.body.discordSubFileName = discordSubFileName;
 
 	next();
 };

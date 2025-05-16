@@ -1,8 +1,8 @@
-GET http://localhost:8000/files/get
-# Content-Type: application/json
+POST http://localhost:8000/files/create
+Content-Type: application/json
 
-# {
-#     "fileName": "world.txt",
-#     "index": "0",
-#     "data": "SGVsbG8gV29ybGQh"
-# }
+{
+    "fileName": "world.txt",
+    "index": "0",
+    "data": "SGVsbG8gV29ybGQh"
+}

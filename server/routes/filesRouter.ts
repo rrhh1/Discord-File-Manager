@@ -5,7 +5,7 @@ import {
 	bodyFileNameIsExist,
 	bodyIndexIsExist,
 	createDiscordFileName,
-	createDiscordFolderName,
+	createDiscordSubFileName,
 	decodeBase64ToBuffer,
 } from "../middleware/formatConversion";
 import {encryptBodyData, encryptFileName, encryptFolderName} from "../middleware/encrypt-decrypt";
@@ -18,7 +18,7 @@ router.use(express.urlencoded({extended: true}));
 router.get("/get", get_controller);
 
 router.use(bodyFileNameIsExist);
-router.use(createDiscordFolderName);
+router.use(createDiscordFileName);
 // router.use(encryptFolderName);
 router.post("/create", create_controller);
 
@@ -26,7 +26,7 @@ router.post("/create", create_controller);
 router.use(bodyIndexIsExist);
 router.use(bodyDataIsExist);
 
-router.use(createDiscordFileName);
+router.use(createDiscordSubFileName);
 // router.use(encryptFileName);
 
 router.use(decodeBase64ToBuffer);

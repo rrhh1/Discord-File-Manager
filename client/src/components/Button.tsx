@@ -3,9 +3,10 @@ import {uploadButtonLogic} from "../controllers/uploadButtonLogic";
 
 interface Prop {
 	id_name: string;
+	updateFileList: () => void;
 }
 
-function Button({id_name}: Prop) {
+function Button({id_name, updateFileList}: Prop) {
 	const [isDisabled, setIsDisabled] = useState(false);
 
 	return (
@@ -16,7 +17,7 @@ function Button({id_name}: Prop) {
 				id={id_name}
 				disabled={isDisabled}
 				onClick={() => {
-					uploadButtonLogic(setIsDisabled);
+					uploadButtonLogic(setIsDisabled, updateFileList);
 				}}
 			>
 				Upload

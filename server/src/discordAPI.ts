@@ -46,17 +46,17 @@ export const getAllFileNames = async () => {
 	return fileNames;
 };
 
-export const textChannelIsExist = (discordFolderName: string) => {
-	const channel = getFolderChannel(discordFolderName);
+export const textChannelIsExist = (discordFileName: string) => {
+	const channel = getFolderChannel(discordFileName);
 	return channel == undefined ? false : true;
 };
 
-export const createTextChannel = async (discordFolderName: string, originalFileName: string) => {
+export const createTextChannel = async (discordFileName: string, originalFileName: string) => {
 	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
 	const category = process.env.CATEGORY_ID as string;
 
 	const channel = await guild.channels.create({
-		name: discordFolderName,
+		name: discordFileName,
 		type: ChannelType.GuildText,
 		parent: category,
 	});

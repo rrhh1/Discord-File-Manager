@@ -3,7 +3,8 @@ import {uploadDataToDiscord} from "./APIs/uploadDataToDiscord";
 
 export const uploadButtonLogic = (
 	// isDisabled: boolean,
-	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>
+	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+	updateFileList: () => void
 ) => {
 	const CHUNK_SIZE = 10 * 1024 * 1024; // 10 MB
 
@@ -49,6 +50,7 @@ export const uploadButtonLogic = (
 
 		await Promise.all(promises);
 		setIsDisabled(false);
+		updateFileList();
 	};
 
 	reader.readAsArrayBuffer(file);
