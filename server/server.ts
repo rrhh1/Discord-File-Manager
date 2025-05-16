@@ -1,5 +1,4 @@
 import "dotenv/config";
-import client from "./src/index";
 import express, {Express, Request, Response} from "express";
 import cors from "cors";
 import pingRouter from "./routes/pingRouter";

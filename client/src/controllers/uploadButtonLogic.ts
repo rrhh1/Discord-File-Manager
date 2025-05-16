@@ -41,8 +41,9 @@ export const uploadButtonLogic = (
 			}
 
 			const base64String = window.btoa(binary);
+			const index = Math.floor(i / CHUNK_SIZE).toString();
 
-			const promise = uploadDataToDiscord(fileName, base64String);
+			const promise = uploadDataToDiscord(fileName, index, base64String);
 			promises.push(promise);
 		}
 

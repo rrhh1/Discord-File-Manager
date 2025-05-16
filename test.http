@@ -1,7 +1,8 @@
-POST http://localhost:8000/files/upload
-Content-Type: application/json
+GET http://localhost:8000/files/get
+# Content-Type: application/json
 
-{
-    "fileName": "hello.txt",
-    "data": "SGVsbG8gV29ybGQh"
-}
+# {
+#     "fileName": "world.txt",
+#     "index": "0",
+#     "data": "SGVsbG8gV29ybGQh"
+# }
