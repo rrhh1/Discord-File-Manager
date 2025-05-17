@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createDiscordFile = async (fileName: string) => {
+export const createDiscordFile = (fileName: string) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};

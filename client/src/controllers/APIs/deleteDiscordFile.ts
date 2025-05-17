@@ -1,21 +1,17 @@
 import axios from "axios";
 
-export const uploadDataToDiscord = (fileName: string, index: string, fileDataBase64: string) => {
+export const deleteDiscordFile = (fileName: string) => {
 	const headers = {
 		"Content-Type": "application/json",
 	};
 
 	const payload = {
 		fileName: fileName,
-		index: index,
-		data: fileDataBase64,
 	};
 
 	return new Promise<boolean>((resolve) => {
 		axios
-			.post("http://localhost:8000/files/upload", payload, {
-				headers: headers,
-			})
+			.delete("http://localhost:8000/files/delete", {headers: headers, data: payload})
 			.then((response?) => {
 				console.log(response?.status);
 				resolve(true);

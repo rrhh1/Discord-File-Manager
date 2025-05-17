@@ -1,8 +1,8 @@
-POST http://localhost:8000/files/create
+POST  http://localhost:8000/files/create
 Content-Type: application/json
 
 {
-    "fileName": "world.txt",
+    "fileName": "hello.txt",
     "index": "0",
     "data": "SGVsbG8gV29ybGQh"
 }

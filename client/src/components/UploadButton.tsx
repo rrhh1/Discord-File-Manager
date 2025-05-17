@@ -6,7 +6,7 @@ interface Prop {
 	updateFileList: () => void;
 }
 
-function Button({id_name, updateFileList}: Prop) {
+function UploadButton({id_name, updateFileList}: Prop) {
 	const [isDisabled, setIsDisabled] = useState(false);
 
 	return (
@@ -26,4 +26,4 @@ function Button({id_name, updateFileList}: Prop) {
 	);
 }
 
-export default Button;
+export default UploadButton;

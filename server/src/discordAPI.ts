@@ -17,10 +17,10 @@ const client = new Client({
 client.login(process.env.TOKEN);
 
 // ======================================================================================================
-const getFolderChannel = (discordFolderName: string) => {
+const getFileChannel = (discordFileName: string) => {
 	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
 	const channel = guild.channels.cache.find(
-		(ch) => ch.name === discordFolderName && ch.parent?.name === "file_storage"
+		(ch) => ch.name === discordFileName && ch.parent?.name === "file_storage"
 	);
 
 	return channel;
@@ -47,7 +47,7 @@ export const getAllFileNames = async () => {
 };
 
 export const textChannelIsExist = (discordFileName: string) => {
-	const channel = getFolderChannel(discordFileName);
+	const channel = getFileChannel(discordFileName);
 	return channel == undefined ? false : true;
 };
 
@@ -65,12 +65,28 @@ export const createTextChannel = async (discordFileName: string, originalFileNam
 	(fileNameChannel as TextChannel).send({content: originalFileName});
 };
 
+export const deleteTextChannel = async (discordFileName: string, originalFileName: string) => {
+	var promises = [];
+
+	const channel = getFileChannel(discordFileName);
+	promises.push(channel?.delete());
+
+	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
+	const fileNameChannel = guild.channels.cache.get(process.env.FILE_NAME_CHANNEL_ID as string);
+
+	const messages = await (fileNameChannel as TextChannel).messages.fetch({limit: 100});
+	const message = messages.find((message) => message.content === originalFileName);
+
+	promises.push(message?.delete());
+	await Promise.all(promises);
+};
+
 export const uploadFile = (
 	discordFolderName: string,
 	discordFileName: string,
 	buffer: Buffer<ArrayBuffer>
 ) => {
-	const channel = getFolderChannel(discordFolderName);
+	const channel = getFileChannel(discordFolderName);
 	const attachment = new AttachmentBuilder(buffer, {name: discordFileName});
 	console.log(`Uploaded ${buffer.length} bytes!`);
 

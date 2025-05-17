@@ -1,5 +1,5 @@
 import FileInput from "./components/FileInput";
-import Button from "./components/Button";
+import UploadButton from "./components/UploadButton";
 import Table from "./components/Table";
 import {useState, useEffect} from "react";
 
@@ -35,14 +35,15 @@ function App() {
 			<br />
 
 			<FileInput id_name={"fileUpload"}></FileInput>
-			<Button
+			<UploadButton
 				id_name={"uploadButton"}
 				updateFileList={updateFileList}
-			></Button>
+			></UploadButton>
 			<Table
 				id_name={"fileNameTable"}
 				fileNames={fileNames}
 				loading={loading}
+				updateFileList={updateFileList}
 			></Table>
 		</>
 	);

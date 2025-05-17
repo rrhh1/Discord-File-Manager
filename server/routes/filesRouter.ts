@@ -1,5 +1,10 @@
 import express from "express";
-import {create_controller, get_controller, upload_controller} from "../controllers/filesController";
+import {
+	create_controller,
+	delete_controller,
+	get_controller,
+	upload_controller,
+} from "../controllers/filesController";
 import {
 	bodyDataIsExist,
 	bodyFileNameIsExist,
@@ -21,6 +26,7 @@ router.use(bodyFileNameIsExist);
 router.use(createDiscordFileName);
 // router.use(encryptFolderName);
 router.post("/create", create_controller);
+router.delete("/delete", delete_controller);
 
 // ============ Upload ========================
 router.use(bodyIndexIsExist);

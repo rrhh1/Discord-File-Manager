@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import {
 	createTextChannel,
+	deleteTextChannel,
 	getAllFileNames,
 	textChannelIsExist,
 	uploadFile,
@@ -27,7 +28,24 @@ export const create_controller = async (req: Request, res: Response) => {
 		await createTextChannel(discordFileName, originalFileName);
 		res.status(200).json({folderName: discordFileName});
 	} catch {
-		res.status(500).send("Error Creating Discord Folder");
+		res.status(500).send("Error Creating Discord File");
+	}
+};
+
+export const delete_controller = async (req: Request, res: Response) => {
+	const discordFileName = req.body.discordFileName;
+	const originalFileName = req.body.fileName;
+
+	try {
+		if (!textChannelIsExist(discordFileName)) {
+			res.status(400).send("File does not exist");
+			return;
+		}
+
+		await deleteTextChannel(discordFileName, originalFileName);
+		res.status(200).send("File deleted");
+	} catch {
+		res.status(500).send("Error Deleting Discord File");
 	}
 };
 
@@ -38,7 +56,7 @@ export const upload_controller = async (req: Request, res: Response) => {
 
 	const fileIsExist = textChannelIsExist(discordFileName);
 	if (!fileIsExist) {
-		res.status(400).send("Folder does not exist, call /create api to create folder");
+		res.status(400).send("File does not exist, call /create api to create folder");
 		return;
 	}
 
