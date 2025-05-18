@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {deleteButtonLogic} from "../controllers/deleteButtonLogic";
+import {downloadButtonLogic} from "../controllers/downloadButtonLogic";
 
 interface Prop {
 	fileName: string;
@@ -28,6 +29,9 @@ function FileButtons({fileName, updateFileList}: Prop) {
 				className="btn btn-success"
 				id={fileName + "_Download"}
 				disabled={isDisabled}
+				onClick={() => {
+					downloadButtonLogic(fileName, setIsDisabled);
+				}}
 			>
 				Download
 			</button>

@@ -1,6 +1,2 @@
-GET  http://localhost:8000/files/download
+GET  http://localhost:8000/files/download/hello.txt
 Content-Type: application/json
-
-{
-    "fileName": "hello.txt"
-}

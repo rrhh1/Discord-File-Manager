@@ -9,7 +9,7 @@ import {
 } from "../src/discordAPI";
 import {decryptDiscordData} from "../middleware/encrypt-decrypt";
 import {encode} from "punycode";
-import {encodeBufferToBase64} from "../middleware/formatConversion";
+import {encodeBufferToBase64} from "../middleware/jsonBodyConversion";
 
 export const files_get_controller = async (req: Request, res: Response) => {
 	try {
@@ -54,8 +54,8 @@ export const files_delete_controller = async (req: Request, res: Response) => {
 };
 
 export const files_download_controller = async (req: Request, res: Response) => {
-	const discordFileName = req.body.discordFileName;
-	const originalFileName = req.body.fileName;
+	const discordFileName = req.params.discordFileName;
+	const originalFileName = req.params.fileName;
 
 	try {
 		if (!textChannelIsExist(discordFileName)) {

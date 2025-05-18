@@ -1,6 +1,4 @@
 import {NextFunction, Request, Response} from "express";
-import {NewLineKind} from "typescript";
-import {encryptFolderName} from "./encrypt-decrypt";
 
 export const bodyIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body) {

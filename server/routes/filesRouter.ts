@@ -14,7 +14,7 @@ import {
 	createDiscordFileName,
 	createDiscordSubFileName,
 	decodeBase64ToBuffer,
-} from "../middleware/formatConversion";
+} from "../middleware/jsonBodyConversion";
 import {encryptBodyData, encryptFileName, encryptFolderName} from "../middleware/encrypt-decrypt";
 
 const router = express.Router();
@@ -22,15 +22,12 @@ const router = express.Router();
 router.use(express.json({limit: "15mb"}));
 router.use(express.urlencoded({extended: true}));
 
-router.get("/get", files_get_controller);
-
 router.use(bodyIsExist);
 router.use(bodyFileNameIsExist);
 router.use(createDiscordFileName);
 // router.use(encryptFolderName);
 router.post("/create", files_create_controller);
 router.delete("/delete", files_delete_controller);
-router.get("/download", files_download_controller);
 
 // ============ Upload ========================
 router.use(bodyIndexIsExist);
