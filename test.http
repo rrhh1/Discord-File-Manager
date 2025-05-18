@@ -1,8 +1,6 @@
-POST  http://localhost:8000/files/create
+GET  http://localhost:8000/files/download
 Content-Type: application/json
 
 {
-    "fileName": "hello.txt",
-    "index": "0",
-    "data": "SGVsbG8gV29ybGQh"
+    "fileName": "hello.txt"
 }

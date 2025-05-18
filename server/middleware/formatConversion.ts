@@ -2,6 +2,15 @@ import {NextFunction, Request, Response} from "express";
 import {NewLineKind} from "typescript";
 import {encryptFolderName} from "./encrypt-decrypt";
 
+export const bodyIsExist = (req: Request, res: Response, next: NextFunction) => {
+	if (!req.body) {
+		res.status(400).send("JSON body not found");
+		return;
+	}
+
+	next();
+};
+
 export const bodyFileNameIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body.fileName) {
 		res.status(400).send("'fileName' not found in JSON");
@@ -60,4 +69,8 @@ export const decodeBase64ToBuffer = (req: Request, res: Response, next: NextFunc
 	} catch {
 		res.status(400).send("Invalid Data");
 	}
+};
+
+export const encodeBufferToBase64 = (buffer: Buffer) => {
+	return buffer.toString("base64");
 };

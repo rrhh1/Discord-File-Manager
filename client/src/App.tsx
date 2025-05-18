@@ -10,9 +10,7 @@ function App() {
 	const [fileNames, setFileNames] = useState([]);
 
 	const updateFileList = () => {
-		setLoading(true);
 		const fetchFileList = async () => {
-			setLoading(true);
 			const response = await axios.get("http://localhost:8000/files/get");
 			setFileNames(response.data.fileNames.sort());
 			setLoading(false);

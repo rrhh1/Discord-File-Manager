@@ -2,12 +2,16 @@ import {Request, Response} from "express";
 import {
 	createTextChannel,
 	deleteTextChannel,
+	downloadFile,
 	getAllFileNames,
 	textChannelIsExist,
 	uploadFile,
 } from "../src/discordAPI";
+import {decryptDiscordData} from "../middleware/encrypt-decrypt";
+import {encode} from "punycode";
+import {encodeBufferToBase64} from "../middleware/formatConversion";
 
-export const get_controller = async (req: Request, res: Response) => {
+export const files_get_controller = async (req: Request, res: Response) => {
 	try {
 		const fileNames = await getAllFileNames();
 		res.status(200).json({fileNames: fileNames});
@@ -16,7 +20,7 @@ export const get_controller = async (req: Request, res: Response) => {
 	}
 };
 
-export const create_controller = async (req: Request, res: Response) => {
+export const files_create_controller = async (req: Request, res: Response) => {
 	const discordFileName = req.body.discordFileName;
 	const originalFileName = req.body.fileName;
 	try {
@@ -32,7 +36,7 @@ export const create_controller = async (req: Request, res: Response) => {
 	}
 };
 
-export const delete_controller = async (req: Request, res: Response) => {
+export const files_delete_controller = async (req: Request, res: Response) => {
 	const discordFileName = req.body.discordFileName;
 	const originalFileName = req.body.fileName;
 
@@ -49,7 +53,34 @@ export const delete_controller = async (req: Request, res: Response) => {
 	}
 };
 
-export const upload_controller = async (req: Request, res: Response) => {
+export const files_download_controller = async (req: Request, res: Response) => {
+	const discordFileName = req.body.discordFileName;
+	const originalFileName = req.body.fileName;
+
+	try {
+		if (!textChannelIsExist(discordFileName)) {
+			res.status(400).send("File does not exist");
+			return;
+		}
+
+		var buffers = await downloadFile(discordFileName);
+		buffers = buffers.map((buffer) => {
+			return decryptDiscordData(buffer as Buffer);
+		});
+
+		const buffer = Buffer.concat(buffers as Buffer[]);
+
+		res.setHeader("Content-Type", "application/octet-stream");
+		res.setHeader("Content-Disposition", `attachment; filename=${originalFileName}`);
+		res.setHeader("Content-Length", buffer.length);
+
+		res.status(200).send(buffer);
+	} catch {
+		res.status(500).send("Error downloading file");
+	}
+};
+
+export const files_upload_controller = async (req: Request, res: Response) => {
 	const discordFileName = req.body.discordFileName;
 	const discordSubFileName = req.body.discordSubFileName;
 	const buffer = req.body.data;

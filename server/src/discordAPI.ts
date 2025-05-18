@@ -1,5 +1,6 @@
 import "dotenv/config";
 import {
+	Attachment,
 	AttachmentBuilder,
 	ChannelType,
 	Client,
@@ -79,6 +80,43 @@ export const deleteTextChannel = async (discordFileName: string, originalFileNam
 
 	promises.push(message?.delete());
 	await Promise.all(promises);
+};
+
+export const downloadFile = async (discordFileName: string) => {
+	const channel = getFileChannel(discordFileName);
+	let attachments: Attachment[] = [];
+
+	let afterId: string | null = "0";
+	do {
+		await (channel as TextChannel).messages
+			.fetch({limit: 100, after: afterId})
+			.then((messagePage) => {
+				messagePage.forEach((message) => {
+					attachments.push(message.attachments.first() as Attachment);
+				});
+
+				afterId = messagePage.size < 100 ? null : (messagePage.at(0)?.id as string);
+			});
+	} while (afterId);
+
+	attachments.sort((a, b) => {
+		return a.name < b.name ? -1 : 1;
+	});
+
+	const fileDataBuffer_promises = attachments.map(async (attachment) => {
+		try {
+			const response = await fetch(attachment.url);
+			if (response.ok) {
+				const arrayBuffer = await response.arrayBuffer();
+				return Buffer.from(arrayBuffer);
+			}
+		} catch (error) {
+			console.error("Failed to fetch attachment");
+		}
+	});
+
+	const fileDataBuffers = await Promise.all(fileDataBuffer_promises);
+	return fileDataBuffers;
 };
 
 export const uploadFile = (

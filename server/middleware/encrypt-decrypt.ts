@@ -61,6 +61,13 @@ export const encryptBodyData = (req: Request, res: Response, next: NextFunction)
 	next();
 };
 
+export const decryptDiscordData = (data: Buffer) => {
+	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
+	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
+
+	return decryptData(data, key, iv);
+};
+
 // export const decryptFolderName = (encryptedFolderName: string) => {
 // 	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
 // 	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
