@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 
+// Check if the request params are valid
 export const paramIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.params) {
 		res.status(400).send("Params not found");
@@ -8,6 +9,7 @@ export const paramIsExist = (req: Request, res: Response, next: NextFunction) =>
 	next();
 };
 
+// Check if the request params contain fileName key
 export const paramFileNameIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.params.fileName) {
 		res.status(400).send("'fileName' not found in params");
@@ -17,7 +19,8 @@ export const paramFileNameIsExist = (req: Request, res: Response, next: NextFunc
 	next();
 };
 
-export const createDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
+// Creates a Discord-compatible file name
+export const paramCreateDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
 	const fileName_split = (req.params.fileName as string)
 		.replaceAll(" ", "-")
 		.replaceAll(".", "-")

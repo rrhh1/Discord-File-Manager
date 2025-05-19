@@ -1,9 +1,9 @@
 import "dotenv/config";
 import express, {Express, Request, Response} from "express";
 import cors from "cors";
-import pingRouter from "./routes/pingRouter";
-import uploadRouter from "./routes/filesRouter";
-import getRouter from "./routes/files_get_routes";
+import postRouter from "./routes/FilesPostRoutes";
+import getRouter from "./routes/FilesGetRoutes";
+import deleteRouter from "./routes/FilesDeleteRoutes";
 
 const app: Express = express();
 const PORT = 8000;
@@ -14,10 +14,14 @@ const corsOptions = {
 // ===================== EXPRESS SERVER ===============================
 app.use(cors(corsOptions));
 
-app.use("/ping", pingRouter);
-
+// Get routes
 app.use("/files", getRouter);
-app.use("/files", uploadRouter);
+
+// Post routes
+app.use("/files", postRouter);
+
+// Delete routes
+app.use("/files", deleteRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);

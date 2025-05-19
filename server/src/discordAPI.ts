@@ -1,16 +1,7 @@
 import "dotenv/config";
-import {
-	Attachment,
-	AttachmentBuilder,
-	ChannelType,
-	Client,
-	Collection,
-	Guild,
-	Message,
-	MessageFlags,
-	TextChannel,
-} from "discord.js";
+import {Attachment, AttachmentBuilder, ChannelType, Client, Guild, TextChannel} from "discord.js";
 
+// Discord.js client
 const client = new Client({
 	intents: ["Guilds", "GuildMessages", "GuildMembers", "MessageContent"],
 });
@@ -18,6 +9,8 @@ const client = new Client({
 client.login(process.env.TOKEN);
 
 // ======================================================================================================
+
+// Gets channel by name
 const getFileChannel = (discordFileName: string) => {
 	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
 	const channel = guild.channels.cache.find(
@@ -27,6 +20,7 @@ const getFileChannel = (discordFileName: string) => {
 	return channel;
 };
 
+// Ping Test
 export const pingTest = () => {
 	const channel = client.channels.cache.get(process.env.TEST_CHANNEL_ID as string);
 	return (channel as TextChannel).send({
@@ -34,6 +28,7 @@ export const pingTest = () => {
 	});
 };
 
+// Get all file names from file name channel
 export const getAllFileNames = async () => {
 	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
 	const fileNameChannel = guild.channels.cache.get(process.env.FILE_NAME_CHANNEL_ID as string);
@@ -47,11 +42,13 @@ export const getAllFileNames = async () => {
 	return fileNames;
 };
 
+// Check if text channel exists
 export const textChannelIsExist = (discordFileName: string) => {
 	const channel = getFileChannel(discordFileName);
 	return channel == undefined ? false : true;
 };
 
+// Create a text channel
 export const createTextChannel = async (discordFileName: string, originalFileName: string) => {
 	const guild = client.guilds.cache.get(process.env.GUILD_ID as string) as Guild;
 	const category = process.env.CATEGORY_ID as string;
@@ -62,10 +59,12 @@ export const createTextChannel = async (discordFileName: string, originalFileNam
 		parent: category,
 	});
 
+	// Upload the file name to the file name channel
 	const fileNameChannel = guild.channels.cache.get(process.env.FILE_NAME_CHANNEL_ID as string);
 	(fileNameChannel as TextChannel).send({content: originalFileName});
 };
 
+// Delete a text channel and remove the file name from the file name channel
 export const deleteTextChannel = async (discordFileName: string, originalFileName: string) => {
 	var promises = [];
 
@@ -82,10 +81,12 @@ export const deleteTextChannel = async (discordFileName: string, originalFileNam
 	await Promise.all(promises);
 };
 
+// Download a file by combining all attachments
 export const downloadFile = async (discordFileName: string) => {
 	const channel = getFileChannel(discordFileName);
 	let attachments: Attachment[] = [];
 
+	// Fetch all messages in the channel
 	let afterId: string | null = "0";
 	do {
 		await (channel as TextChannel).messages
@@ -99,10 +100,12 @@ export const downloadFile = async (discordFileName: string) => {
 			});
 	} while (afterId);
 
+	// Sort attachments by name
 	attachments.sort((a, b) => {
 		return a.name < b.name ? -1 : 1;
 	});
 
+	// Download all attachments as buffers
 	const fileDataBuffer_promises = attachments.map(async (attachment) => {
 		try {
 			const response = await fetch(attachment.url);
@@ -116,9 +119,12 @@ export const downloadFile = async (discordFileName: string) => {
 	});
 
 	const fileDataBuffers = await Promise.all(fileDataBuffer_promises);
+
+	// Return buffers
 	return fileDataBuffers;
 };
 
+// Upload a subfile to the channel
 export const uploadFile = (
 	discordFolderName: string,
 	discordFileName: string,

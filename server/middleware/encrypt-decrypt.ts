@@ -2,6 +2,8 @@ import * as crypto from "crypto";
 import "dotenv/config";
 import {Request, Response, NextFunction} from "express";
 
+// Encrypt name and data using AES-256-CBC and AES-256-CTR algorithms
+// The encryption key and IV are stored in environment variables for security
 const encryptName = (text: string, key: Buffer, iv: Buffer) => {
 	const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
 	return Buffer.from(cipher.update(text, "utf8", "hex") + cipher.final("hex")).toString("base64");
@@ -29,28 +31,8 @@ const makeDiscordNameCompatible = (text: string) => {
 
 // ===================== Middleware =====================================================
 
-export const encryptFolderName = (req: Request, res: Response, next: NextFunction) => {
-	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
-	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
-
-	var discordFolderName = req.body.discordFolderName;
-	discordFolderName = encryptName(discordFolderName, key, iv);
-	req.body.discordFolderName = makeDiscordNameCompatible(discordFolderName);
-
-	next();
-};
-
-export const encryptFileName = (req: Request, res: Response, next: NextFunction) => {
-	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
-	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
-
-	var discordFileName = req.body.discordFileName;
-	discordFileName = encryptName(discordFileName, key, iv);
-	req.body.discordFileName = makeDiscordNameCompatible(discordFileName);
-
-	next();
-};
-
+// Middlware to encrypt body data
+// From client to server to discord
 export const encryptBodyData = (req: Request, res: Response, next: NextFunction) => {
 	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
 	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
@@ -61,16 +43,11 @@ export const encryptBodyData = (req: Request, res: Response, next: NextFunction)
 	next();
 };
 
+// Middleware to decrypt data
+// From discord to server to client
 export const decryptDiscordData = (data: Buffer) => {
 	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
 	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
 
 	return decryptData(data, key, iv);
 };
-
-// export const decryptFolderName = (encryptedFolderName: string) => {
-// 	const key = Buffer.from(process.env.ENCRYPTION_KEY as string, "hex");
-// 	const iv = Buffer.from(process.env.ENCRYPTION_IV as string, "hex");
-
-// 	return decrypt(encryptedFolderName, key, iv);
-// };

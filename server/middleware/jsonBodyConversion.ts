@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 
+// Check if the request body is a valid JSON
 export const bodyIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body) {
 		res.status(400).send("JSON body not found");
@@ -9,6 +10,7 @@ export const bodyIsExist = (req: Request, res: Response, next: NextFunction) => 
 	next();
 };
 
+// Check if the request body contains fileName key
 export const bodyFileNameIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body.fileName) {
 		res.status(400).send("'fileName' not found in JSON");
@@ -18,7 +20,8 @@ export const bodyFileNameIsExist = (req: Request, res: Response, next: NextFunct
 	next();
 };
 
-export const createDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
+// Creates a Discord-compatible file name
+export const bodyCreateDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
 	const fileName_split = (req.body.fileName as string)
 		.replaceAll(" ", "-")
 		.replaceAll(".", "-")
@@ -34,6 +37,7 @@ export const createDiscordFileName = (req: Request, res: Response, next: NextFun
 	next();
 };
 
+// Check if the request body contains index key
 export const bodyIndexIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body.index) {
 		res.status(400).send("'index' not found in JSON body");
@@ -43,6 +47,7 @@ export const bodyIndexIsExist = (req: Request, res: Response, next: NextFunction
 	next();
 };
 
+// Check if the request body contains data key
 export const bodyDataIsExist = (req: Request, res: Response, next: NextFunction) => {
 	if (!req.body.data) {
 		res.status(400).send("'data' not found in JSON body");
@@ -52,14 +57,16 @@ export const bodyDataIsExist = (req: Request, res: Response, next: NextFunction)
 	next();
 };
 
-export const createDiscordSubFileName = (req: Request, res: Response, next: NextFunction) => {
+// Creates a Discord-compatible subfile name
+export const bodyCreateDiscordSubFileName = (req: Request, res: Response, next: NextFunction) => {
 	const discordSubFileName = req.body.fileName + " " + req.body.index;
 	req.body.discordSubFileName = discordSubFileName;
 
 	next();
 };
 
-export const decodeBase64ToBuffer = (req: Request, res: Response, next: NextFunction) => {
+// Middleware to decode base64 data to Buffer
+export const bodyDecodeBase64ToBuffer = (req: Request, res: Response, next: NextFunction) => {
 	const data = req.body.data;
 	try {
 		req.body.data = Buffer.from(data, "base64");
@@ -67,8 +74,4 @@ export const decodeBase64ToBuffer = (req: Request, res: Response, next: NextFunc
 	} catch {
 		res.status(400).send("Invalid Data");
 	}
-};
-
-export const encodeBufferToBase64 = (buffer: Buffer) => {
-	return buffer.toString("base64");
 };

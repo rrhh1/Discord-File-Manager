@@ -22,6 +22,8 @@ function App() {
 		updateFileList();
 	}, []);
 
+	const value = 10000000000000;
+
 	return (
 		<>
 			<br />
@@ -37,6 +39,9 @@ function App() {
 				id_name={"uploadButton"}
 				updateFileList={updateFileList}
 			></UploadButton>
+			<p>
+				<center>Uploaded {value} subfiles</center>
+			</p>
 			<Table
 				id_name={"fileNameTable"}
 				fileNames={fileNames}
