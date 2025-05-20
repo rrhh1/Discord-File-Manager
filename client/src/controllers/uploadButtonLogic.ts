@@ -1,6 +1,7 @@
 import {createDiscordFile} from "./APIs/createDiscordFile";
 import {uploadDataToDiscord} from "./APIs/uploadDataToDiscord";
 
+// This function handles the logic for the upload button in the file list component.
 export const uploadButtonLogic = (
 	// isDisabled: boolean,
 	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>,

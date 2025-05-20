@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Function to create a Discord file through the server
 export const createDiscordFile = (fileName: string) => {
 	const headers = {
 		"Content-Type": "application/json",

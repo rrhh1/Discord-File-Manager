@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Function to download a Discord file through the server
 export const downloadDiscordFile = (fileName: string) => {
 	const headers = {
 		"Content-Type": "application/octet-stream",

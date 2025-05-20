@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Function to upload a Discord file through the server
 export const uploadDataToDiscord = (fileName: string, index: string, fileDataBase64: string) => {
 	const headers = {
 		"Content-Type": "application/json",

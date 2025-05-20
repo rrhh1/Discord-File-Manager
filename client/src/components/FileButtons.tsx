@@ -7,6 +7,7 @@ interface Prop {
 	updateFileList: () => void;
 }
 
+// Component to handle the file buttons (delete and download)
 function FileButtons({fileName, updateFileList}: Prop) {
 	const [isDisabled, setIsDisabled] = useState(false);
 

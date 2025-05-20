@@ -6,6 +6,7 @@ interface Prop {
 	updateFileList: () => void;
 }
 
+// Component to handle the upload button
 function UploadButton({id_name, updateFileList}: Prop) {
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [totalChunks, setTotalChunks] = useState(0);

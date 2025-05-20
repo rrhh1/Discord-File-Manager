@@ -5,10 +5,12 @@ import {useState, useEffect} from "react";
 
 import axios from "axios";
 
+// Main component of the app
 function App() {
 	const [loading, setLoading] = useState(true);
 	const [fileInfo, setFileInfo] = useState({});
 
+	// Function to update the file list
 	const updateFileList = () => {
 		const formatBytes = (bytes: number, decimals = 2) => {
 			if (!+bytes) return "0 Bytes";
@@ -22,6 +24,7 @@ function App() {
 			return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 		};
 
+		// Fetch the file list from the server and update the state
 		const fetchFileList = async () => {
 			const response = await axios.get("http://localhost:8000/files/get");
 
@@ -36,6 +39,7 @@ function App() {
 		fetchFileList();
 	};
 
+	// Fetch the file list when the component mounts
 	useEffect(() => {
 		updateFileList();
 	}, []);

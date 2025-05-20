@@ -7,6 +7,7 @@ interface Prop {
 	updateFileList: () => void;
 }
 
+// Component to display the table of files
 function Table({id_name, fileInfo, loading, updateFileList}: Prop) {
 	if (loading) {
 		return <div></div>;

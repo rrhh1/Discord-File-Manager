@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Function to delete a Discord file through the server
 export const deleteDiscordFile = (fileName: string) => {
 	const headers = {
 		"Content-Type": "application/json",
