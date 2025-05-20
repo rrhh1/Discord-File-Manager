@@ -18,6 +18,7 @@ export const deleteDiscordFile = (fileName: string) => {
 			})
 			.catch((error) => {
 				console.log(error.status);
+				console.log(error);
 				resolve(false);
 			});
 	});

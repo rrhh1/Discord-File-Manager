@@ -2,12 +2,12 @@ import FileButtons from "./FileButtons";
 
 interface Prop {
 	id_name: string;
-	fileNames: string[];
+	fileInfo: {[key: string]: string};
 	loading: boolean;
 	updateFileList: () => void;
 }
 
-function Table({id_name, fileNames, loading, updateFileList}: Prop) {
+function Table({id_name, fileInfo, loading, updateFileList}: Prop) {
 	if (loading) {
 		return <div></div>;
 	}
@@ -22,20 +22,22 @@ function Table({id_name, fileNames, loading, updateFileList}: Prop) {
 					<tr className="text-center">
 						<th scope="col">#</th>
 						<th scope="col">File Name</th>
+						<th scope="col">Size</th>
 						<th scope="col">Delete/Download</th>
 					</tr>
 				</thead>
 				<tbody>
-					{fileNames.map((fileName: string, index: number) => (
+					{Object.keys(fileInfo).map((key, index) => (
 						<tr
 							className="text-center"
-							key={fileName}
+							key={key}
 						>
 							<th scope="row">{index + 1}</th>
-							<td>{fileName}</td>
+							<td>{key}</td>
+							<td>{fileInfo[key]}</td>
 							<td className="text-center py-1">
 								<FileButtons
-									fileName={fileName}
+									fileName={key}
 									updateFileList={updateFileList}
 								></FileButtons>
 							</td>

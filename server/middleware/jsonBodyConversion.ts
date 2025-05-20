@@ -1,4 +1,5 @@
 import {NextFunction, Request, Response} from "express";
+import {createDiscordFileName} from "./utility";
 
 // Check if the request body is a valid JSON
 export const bodyIsExist = (req: Request, res: Response, next: NextFunction) => {
@@ -22,17 +23,11 @@ export const bodyFileNameIsExist = (req: Request, res: Response, next: NextFunct
 
 // Creates a Discord-compatible file name
 export const bodyCreateDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
-	const fileName_split = (req.body.fileName as string)
-		.replaceAll(" ", "-")
-		.replaceAll(".", "-")
-		.split("-");
+	const result = createDiscordFileName(req.body.fileName as string);
 
-	const extension = fileName_split.length > 1 ? fileName_split.pop() : "";
-	const name = fileName_split.join("-");
-
-	req.body.name = name;
-	req.body.extension = extension;
-	req.body.discordFileName = name + "_" + extension;
+	req.body.name = result.name;
+	req.body.extension = result.extension as string;
+	req.body.discordFileName = result.discordFileName;
 
 	next();
 };
@@ -59,7 +54,7 @@ export const bodyDataIsExist = (req: Request, res: Response, next: NextFunction)
 
 // Creates a Discord-compatible subfile name
 export const bodyCreateDiscordSubFileName = (req: Request, res: Response, next: NextFunction) => {
-	const discordSubFileName = req.body.fileName + " " + req.body.index;
+	const discordSubFileName = req.body.fileName + "_" + req.body.index;
 	req.body.discordSubFileName = discordSubFileName;
 
 	next();

@@ -6,7 +6,7 @@ const client = new Client({
 	intents: ["Guilds", "GuildMessages", "GuildMembers", "MessageContent"],
 });
 
-client.login(process.env.TOKEN);
+client.login(process.env.BOT_TOKEN);
 
 // ======================================================================================================
 
@@ -40,6 +40,27 @@ export const getAllFileNames = async () => {
 	});
 
 	return fileNames;
+};
+
+export const getFileSize = async (discordFileName: string) => {
+	const channel = getFileChannel(discordFileName);
+	let fileSize = 0;
+
+	// Fetch all messages in the channel
+	let afterId: string | null = "0";
+	do {
+		await (channel as TextChannel).messages
+			.fetch({limit: 100, after: afterId})
+			.then((messagePage) => {
+				messagePage.forEach((message) => {
+					fileSize += (message.attachments.first() as Attachment).size;
+				});
+
+				afterId = messagePage.size < 100 ? null : (messagePage.at(0)?.id as string);
+			});
+	} while (afterId);
+
+	return fileSize;
 };
 
 // Check if text channel exists

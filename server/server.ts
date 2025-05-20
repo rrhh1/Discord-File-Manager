@@ -17,11 +17,11 @@ app.use(cors(corsOptions));
 // Get routes
 app.use("/files", getRouter);
 
-// Post routes
-app.use("/files", postRouter);
-
 // Delete routes
 app.use("/files", deleteRouter);
+
+// Post routes
+app.use("/files", postRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);

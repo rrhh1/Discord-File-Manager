@@ -7,12 +7,30 @@ import axios from "axios";
 
 function App() {
 	const [loading, setLoading] = useState(true);
-	const [fileNames, setFileNames] = useState([]);
+	const [fileInfo, setFileInfo] = useState({});
 
 	const updateFileList = () => {
+		const formatBytes = (bytes: number, decimals = 2) => {
+			if (!+bytes) return "0 Bytes";
+
+			const k = 1024;
+			const dm = decimals < 0 ? 0 : decimals;
+			const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
+
+			const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+			return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+		};
+
 		const fetchFileList = async () => {
 			const response = await axios.get("http://localhost:8000/files/get");
-			setFileNames(response.data.fileNames.sort());
+
+			const data: {[key: string]: string} = {};
+			Object.keys(response.data).forEach((key) => {
+				data[key] = formatBytes(response.data[key]);
+			});
+
+			setFileInfo(data);
 			setLoading(false);
 		};
 		fetchFileList();
@@ -21,8 +39,6 @@ function App() {
 	useEffect(() => {
 		updateFileList();
 	}, []);
-
-	const value = 10000000000000;
 
 	return (
 		<>
@@ -39,12 +55,9 @@ function App() {
 				id_name={"uploadButton"}
 				updateFileList={updateFileList}
 			></UploadButton>
-			<p>
-				<center>Uploaded {value} subfiles</center>
-			</p>
 			<Table
 				id_name={"fileNameTable"}
-				fileNames={fileNames}
+				fileInfo={fileInfo}
 				loading={loading}
 				updateFileList={updateFileList}
 			></Table>

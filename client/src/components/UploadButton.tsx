@@ -8,6 +8,8 @@ interface Prop {
 
 function UploadButton({id_name, updateFileList}: Prop) {
 	const [isDisabled, setIsDisabled] = useState(false);
+	const [totalChunks, setTotalChunks] = useState(0);
+	const [uploadedChunks, setUploadedChunks] = useState(0);
 
 	return (
 		<div className="text-center">
@@ -17,11 +19,21 @@ function UploadButton({id_name, updateFileList}: Prop) {
 				id={id_name}
 				disabled={isDisabled}
 				onClick={() => {
-					uploadButtonLogic(setIsDisabled, updateFileList);
+					uploadButtonLogic(
+						setIsDisabled,
+						setTotalChunks,
+						setUploadedChunks,
+						updateFileList
+					);
 				}}
 			>
 				Upload
 			</button>
+			<div style={{marginTop: "0.5rem", minHeight: "1.5em"}}>
+				<h6 style={{margin: 0, visibility: totalChunks === 0 ? "hidden" : "visible"}}>
+					{`Uploaded ${uploadedChunks} / ${totalChunks} chunks`}
+				</h6>
+			</div>
 		</div>
 	);
 }

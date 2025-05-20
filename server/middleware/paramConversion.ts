@@ -1,4 +1,5 @@
 import {NextFunction, Request, Response} from "express";
+import {createDiscordFileName} from "./utility";
 
 // Check if the request params are valid
 export const paramIsExist = (req: Request, res: Response, next: NextFunction) => {
@@ -21,17 +22,11 @@ export const paramFileNameIsExist = (req: Request, res: Response, next: NextFunc
 
 // Creates a Discord-compatible file name
 export const paramCreateDiscordFileName = (req: Request, res: Response, next: NextFunction) => {
-	const fileName_split = (req.params.fileName as string)
-		.replaceAll(" ", "-")
-		.replaceAll(".", "-")
-		.split("-");
+	const result = createDiscordFileName(req.params.fileName as string);
 
-	const extension = fileName_split.length > 1 ? fileName_split.pop() : "";
-	const name = fileName_split.join("-");
-
-	req.params.name = name;
-	req.params.extension = extension as string;
-	req.params.discordFileName = name + "_" + extension;
+	req.params.name = result.name;
+	req.params.extension = result.extension as string;
+	req.params.discordFileName = result.discordFileName;
 
 	next();
 };

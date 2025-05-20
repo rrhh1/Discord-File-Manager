@@ -1,12 +1,24 @@
 import {Request, Response} from "express";
-import {downloadFile, getAllFileNames, textChannelIsExist} from "../src/discordAPI";
+import {downloadFile, getAllFileNames, getFileSize, textChannelIsExist} from "../src/discordAPI";
 import {decryptDiscordData} from "../middleware/encrypt-decrypt";
+import {createDiscordFileName} from "../middleware/utility";
 
 // Get all files -- controller
 export const files_get_controller = async (req: Request, res: Response) => {
 	try {
-		const fileNames = await getAllFileNames();
-		res.status(200).json({fileNames: fileNames});
+		var fileNames = await getAllFileNames();
+		fileNames = fileNames.sort();
+
+		var fileNames_promises = fileNames.map((fileName) => {
+			const result = createDiscordFileName(fileName);
+			return getFileSize(result.discordFileName);
+		});
+
+		const fileSizes = await Promise.all(fileNames_promises);
+		const fileNamesWithSize = Object.fromEntries(
+			fileNames.map((fileName, index) => [fileName, fileSizes[index]])
+		);
+		res.status(200).json(fileNamesWithSize);
 	} catch {
 		res.status(500).send("Error Fetching Files");
 	}
