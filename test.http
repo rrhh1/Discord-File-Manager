@@ -1,2 +1,0 @@
-GET  http://localhost:8000/files/download/hello.txt
-Content-Type: application/json

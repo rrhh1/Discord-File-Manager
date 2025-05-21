@@ -6,11 +6,18 @@ Small project to transfer large files between a local computer and a discord ser
 
 Users can upload, delete, and download files from the client side of the application while the server side communicates to Discord via the Discord.js API.
 
-I do not condone abusing Discord's services and API. This was purely a for fun project for me to finally get my hands on full-stack development.
+I do not condone abusing Discord's services and API. This was purely a for-fun project for me to finally get my hands on full-stack development after putting it off for a while.
+
+## Demo
+
+### Images
+
+![Uploading File](./assets/uploading.png)
+![Uploaded File in Discord](./assets/discord_side.png)
 
 ## Installation and Usage
 
-**Tested only on a Windows 10 environment.**
+**Tested only on a Windows 10 environment**
 
 ### Environment Setup
 
@@ -21,17 +28,17 @@ I do not condone abusing Discord's services and API. This was purely a for fun p
 
 1. Open `.env.sample` file in `X:/path/to/project/server/samples`
 2. Follow direction in file, modify as needed
-3. Renamed copied file as `.env` and move outside of sample folder to `X:/path/to/project/server`
+3. Rename copied file as `.env` and move outside of sample folder to `X:/path/to/project/server`
 
 #### Encryption Key Creation
 
 To generate values for the `Encryption_Key` and `Encryption_IV` variables:
 
-You can use the python script `GenerateEncryptionKeys.py` in `X:/path/to/project/server` if you have python installed.
+You can use the python script `GenerateEncryptionKeys.py` in `X:/path/to/project/server` if you have python installed
 
 OR
 
-Generate them through your own means.
+Generate them through your own means
 
 ### Building Project
 
@@ -51,7 +58,7 @@ Download dependencies:
 npm install
 ```
 
-Build Project
+Build Project:
 
 ```bash
 npm build
@@ -59,7 +66,7 @@ npm build
 
 #### Second terminal: Server folder
 
-In the other terminal, enter server directory
+In the other terminal, enter server directory:
 
 ```bash
 cd server
@@ -71,7 +78,7 @@ Download dependencies (Ignore low severity warnings if any):
 npm install
 ```
 
-Build Project
+Build Project:
 
 ```bash
 npm build
@@ -85,10 +92,10 @@ In the client terminal, run:
 npm run preview
 ```
 
-In the server terminal, run
+In the server terminal, run:
 
 ```bash
 npm run start
 ```
 
-In the client terminal, click the link (`http://localhost:5173/`) that appears. The project is now ready to be used.
+In the client terminal, click the `localhost` link that appears. The project is now ready to use!
