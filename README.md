@@ -49,19 +49,19 @@ In one of the terminals, enter client directory:
 cd client
 ```
 
-Download dependencies:
+Download client dependencies:
 
 ```bash
 npm install
 ```
 
-Build Project:
+Build client:
 
 ```bash
 npm build
 ```
 
-#### Second terminal: Server folder
+#### Second Terminal: Server Folder
 
 In the other terminal, enter server directory:
 
@@ -69,13 +69,13 @@ In the other terminal, enter server directory:
 cd server
 ```
 
-Download dependencies (Ignore low severity warnings if any):
+Download server dependencies (Ignore low severity warnings if any):
 
 ```bash
 npm install
 ```
 
-Build Project:
+Build server:
 
 ```bash
 npm build
