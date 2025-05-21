@@ -8,7 +8,7 @@ import deleteRouter from "./routes/FilesDeleteRoutes";
 const app: Express = express();
 const PORT = 8000;
 const corsOptions = {
-	origin: ["http://localhost:5173"],
+	origin: ["http://localhost:4173", "http://localhost:5173"],
 };
 
 // ===================== EXPRESS SERVER ===============================

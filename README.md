@@ -51,6 +51,12 @@ Download dependencies:
 npm install
 ```
 
+Build Project
+
+```bash
+npm build
+```
+
 #### Second terminal: Server folder
 
 In the other terminal, enter server directory
@@ -63,6 +69,12 @@ Download dependencies (Ignore low severity warnings if any):
 
 ```bash
 npm install
+```
+
+Build Project
+
+```bash
+npm build
 ```
 
 ### Running Project
