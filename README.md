@@ -10,7 +10,7 @@ I do not condone abusing Discord's services and API. This was purely a for-fun p
 
 ## Video Demo
 
-[![Video Demo](./assets/uploading.png)](./assets/demo.mp4)
+[![Video Demo](./assets/uploading.png)](https://www.youtube.com/watch?v=ne3YPOOlc3k)
 
 ## Installation and Usage
 
