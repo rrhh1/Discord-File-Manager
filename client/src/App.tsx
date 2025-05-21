@@ -50,7 +50,7 @@ function App() {
 			<br />
 
 			<h1>
-				<center>Discord File Storage</center>
+				<center>Discord File Manager</center>
 			</h1>
 			<br />
 

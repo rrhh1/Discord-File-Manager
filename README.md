@@ -8,12 +8,9 @@ Users can upload, delete, and download files from the client side of the applica
 
 I do not condone abusing Discord's services and API. This was purely a for-fun project for me to finally get my hands on full-stack development after putting it off for a while.
 
-## Demo
+## Video Demo
 
-### Images
-
-![Uploading File](./assets/uploading.png)
-![Uploaded File in Discord](./assets/discord_side.png)
+[![Video Demo](./assets/uploading.png)](./assets/demo.mp4)
 
 ## Installation and Usage
 
